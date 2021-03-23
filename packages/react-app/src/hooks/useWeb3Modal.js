@@ -3,11 +3,8 @@ import { Web3Provider } from "@ethersproject/providers";
 import Web3Modal from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 
-// Enter a valid infura key here to avoid being rate limited
-// You can get a key for free at https://infura.io/register
-const INFURA_ID = "INVALID_INFURA_KEY";
-
-const NETWORK_NAME = "mainnet";
+const INFURA_ID = "5ddff3d540c34448838ae811bc08449d";
+const NETWORK_NAME = "ropsten";
 
 function useWeb3Modal(config = {}) {
   const [provider, setProvider] = useState();
@@ -20,6 +17,7 @@ function useWeb3Modal(config = {}) {
     network: NETWORK,
     cacheProvider: true,
     providerOptions: {
+      portis: {},
       walletconnect: {
         package: WalletConnectProvider,
         options: {
@@ -32,11 +30,17 @@ function useWeb3Modal(config = {}) {
   // Open wallet selection modal.
   const loadWeb3Modal = useCallback(async () => {
     const newProvider = await web3Modal.connect();
+    
+    // Subscribe to accounts change
+    newProvider.on("accountsChanged", (accounts: string[]) => {
+      console.log(accounts);
+    });
+    
     setProvider(new Web3Provider(newProvider));
   }, [web3Modal]);
 
   const logoutOfWeb3Modal = useCallback(
-    async function () {
+    async () => {
       await web3Modal.clearCachedProvider();
       window.location.reload();
     },
