@@ -8,10 +8,11 @@ The default template is a monorepo created with [Yarn Workspaces](https://classi
 
 ### React App
 
+#### `yarn install`
+
+To install dependencies or `npm i`, prefer `yarn` though :)
+
 #### `yarn react-app:start`
 
 Runs the React app in development mode.<br>
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will automatically reload if you make changes to the code.<br>
-You will see the build errors and lint warnings in the console.
